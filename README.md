@@ -24,7 +24,7 @@ The Language Dialect Translator has been deployed to GitHub Pages and is accessi
 
 ## Visuals
 
-![Example Image](/assets/images/weather-dashboard.png)
+![Example Image](/assets/images/weather-board-image.png)
 
 
 
