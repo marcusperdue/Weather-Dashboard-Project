@@ -4,11 +4,11 @@
 	box-sizing: border-box;
 }
 .wrapper {
-	background-image: url('../images/background-img.png');
-	background-size: cover;
-	background-repeat: no-repeat;
-	width: 100%;
-	height: 100vh;
+  background-image: url('../images/background-img.png');
+  background-size: cover;
+  background-repeat: repeat; 
+  width: 100%;
+  min-height: 100vh;
 }
 .bg-semi-transparent {
 	background-color: rgba(0, 0, 0, 0.1);
@@ -61,3 +61,4 @@
   background-color: rgba(0, 0, 0, 0.4); 
   border-color: rgba(0, 0, 0, 0);
 }
+
