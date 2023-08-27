@@ -1,8 +1,8 @@
-
- /* Recent Weather*/
+/* Recent Weather */
 $(document).ready(function() {
   const MAX_RECENT_CITIES = 10;
   const localStorageKey = 'recentCities';
+  const apiKey = 'c87120f4f0057256f6ae9f36ae2b9c6d';
   const recentCities = JSON.parse(localStorage.getItem(localStorageKey)) || [];
   populateRecentCities(recentCities);
 
@@ -65,10 +65,9 @@ $(document).ready(function() {
     $('#clear-recent').show(); 
   }
 
-  /* Current Weather*/
+  /* Current Weather */
 
   function fetchWeather(city) {
-    const apiKey = 'c87120f4f0057256f6ae9f36ae2b9c6d';
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
 
     $.ajax({
@@ -98,6 +97,7 @@ $(document).ready(function() {
         `;
 
         $('#weather-details').html(weatherDetails);
+        fetchForecast(city); // Call fetchForecast here
       },
 
       error: function(error) {
@@ -106,4 +106,68 @@ $(document).ready(function() {
     });
   }
 
+  /* % day Forcast */
+
+  function fetchForecast(city) {
+    const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+    $.ajax({
+      url: forecastApiUrl,
+      method: 'GET',
+      dataType: 'json',
+
+      success: function(data) {
+        const forecastList = data.list.slice(0, 5); // Take only the first 5 forecasts
+        let forecastHtml = '';
+        
+
+        forecastList.forEach(forecast => {
+          const forecastDate = new Date(forecast.dt * 1000).toLocaleDateString();
+          const forecastTemperature = forecast.main.temp;
+          const forecastWeatherIcon = forecast.weather[0].icon;
+          const forecastDescription = forecast.weather[0].description;
+
+          const iconUrl = `http://openweathermap.org/img/w/${forecastWeatherIcon}.png`;
+
+          forecastHtml += `
+            <div class="forecast-item">
+              <p class="mb-0">${forecastDate}</p>
+              <img src="${iconUrl}" alt="Forecast Icon">
+              <p class="mb-0">${forecastDescription}</p>
+              <p class="mb-0">${forecastTemperature}°C</p>
+            </div>
+          `;
+        });
+
+        $('#forecast-details').html(forecastHtml);
+      },
+
+      error: function(error) {
+        console.error('Error fetching forecast data:', error);
+      }
+    });
+  }
 });
+
+
+
+
+
+// Function to update the current time and date
+function updateCurrentTimeAndDate() {
+  const now = new Date();
+  const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
+  const currentTime = now.toLocaleTimeString('en-US', timeOptions);
+  const currentDate = now.toLocaleDateString('en-US', dateOptions);
+
+  const currentTimeDate = `
+    <p class="mb-0">${currentTime}</p>
+    <p class="mb-0">${currentDate}</p>
+  `;
+
+  $('#time-date-details').html(currentTimeDate);
+}
+
+updateCurrentTimeAndDate();
+setInterval(updateCurrentTimeAndDate, 1000);
