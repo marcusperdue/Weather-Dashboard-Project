@@ -27,10 +27,10 @@ The Language Dialect Translator has been deployed to GitHub Pages and is accessi
 ![Example Image](/assets/images/weather-board-image.png)
 
 
+## Attribution
 
-## Credits
+Weather data provided by the [OpenWeatherMap API](https://openweathermap.org/api).
 
-- N/A
 
 ## License
 
