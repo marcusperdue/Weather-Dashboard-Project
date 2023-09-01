@@ -90,7 +90,7 @@ $(document).ready(function() {
 			}
 		});
 	}
-	/* % day Forcast */
+	/* 5 day Forcast */
 	function fetchForecast(city) {
 		const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 		$.ajax({
